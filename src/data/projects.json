@@ -1,48 +1,66 @@
 {
   "projects": [
     {
-      "title": "Customer Churn Analysis",
-      "description": "Analyzed customer data to predict churn using Python.",
+      "title": "Detecting Credit Card Fraud in Transactional Data",
+      "description": "This project applied data analytics and machine learning to a large Kaggle dataset, separating online and offline transactions for analysis. Multiple binary classification models (Logistic Regression, Decision Tree, Random Forest, Neural Networks, Gradient Boosting, SVC, KNN) were developed and evaluated using 5-fold cross-validation. Random Forest emerged as the best model after hyperparameter tuning, achieving high F1-scores—0.8499 (offline) and 0.8931 (online). Feature importance analysis revealed key fraud indicators, and business impact analysis estimated annual cost savings of 68.54% (offline) and 83.37% (online) for a sample of 2,000 customers.",
       "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Running%20Code.ipynb",
-      "tags": ["Python", "Pandas", "Scikit-learn"]
+      "tags": ["Python", "Scikit-learn","Machine Learning","Hyperparameter tuning"]
     },
     {
-      "title": "Sales Forecasting",
-      "description": "Developed a time series model to forecast monthly sales.",
+      "title": "Customer Segmentation Analysis",
+      "description": "This project employed data mining techniques to segment customers into distinct groups based on their demographic and purchasing behaviour. Data preprocessing and visualization techniques were first used to identify outliers, missing values, and correlations between variables. Principal Component Analysis (PCA) was then applied to reduce the dimensionality of the dataset, followed by K-Means clustering to identify four distinct customer segments. These insights can be leveraged to develop targeted marketing strategies and improve customer satisfaction.",
       "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb",
-      "tags": ["Python", "Statsmodels", "Time Series"]
+      "tags": ["Python", "Clustering", "PCA"]
     },
     {
-      "title": "Market Basket Analysis",
-      "description": "Identified product associations from transaction data.",
+      "title": "Leveraging NLP to Enhance Financial Analysis of Analyst Reports",
+      "description": "This project employed natural language processing (NLP) techniques to analyse financial analyst reports. By leveraging the pre-trained transformer based FinBERT model, sentiment analysis was conducted, achieving an accuracy of 69%. Additionally, Latent Dirichlet Allocation (LDA) was utilized to identify key topics within the reports, including company fundamentals, dividend yields, and supply-demand dynamics. This project enhanced financial analysis by automating sentiment analysis and topic modelling, ultimately contributing to more informed decision-making.",
       "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Notebook%20Basics.ipynb",
-      "tags": ["Python", "Apriori", "Data Mining"]
+      "tags": ["Python", "NLP", "Sentiment Analysis", "Topic Modelling"]
     }
   ],
   "archivedProjects": [
     {
-      "title": "E-commerce Product Recommendation",
-      "description": "Built a recommendation system for an e-commerce platform.",
+      "title": "Forecasting Temperatures in Singapore with R",
+      "description": "This project investigated historical temperature and rainfall data in Singapore to identify trends, relationships, and forecast future temperatures. The analysis revealed a consistent upward trend in both average daily maximum and minimum temperatures. Rainfall data exhibited a negative correlation with average daily maximum temperature but no significant relationship with average daily minimum temperature. ARIMAX models, incorporating rainfall as a predictor, outperformed ARIMA models in forecasting both temperature series. The forecasts suggest a continued increase in average temperatures in the coming years, with rainfall influencing short-term predictions. However, external factors such as urbanisation and changing climate patterns may impact long-term trends.",
       "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Running%20Code.ipynb",
-      "tags": ["Python", "Recommendation System", "Machine Learning"]
+      "tags": ["R", "Forecasting", "ARIMA"]
     },
     {
-      "title": "Sentiment Analysis of Social Media",
-      "description": "Performed sentiment analysis on Twitter data.",
+      "title": "Analysis and Modeling of ecommerce coupon sales using SAS Viya",
+      "description": "In this project, my team and I were tasked with extracting insights from an e-commerce coupon site dataset using any of the SAS tools taught during the SAS AIML program, such as SAS Data Studio and SAS Model Studio in SAS VIYA.",
       "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb",
-      "tags": ["Python", "NLTK", "Sentiment Analysis"]
+      "tags": ["SAS Viya", "SAS", "Machine Learning"]
     },
     {
-      "title": "Fraud Detection",
-      "description": "Developed a model to detect fraudulent transactions.",
+      "title": "Identifying High Value HDB Flats with SPSS Modeler",
+      "description": "This project aims to analyse the resale values of HDB flats in Singapore, specifically focussing on 4-room flats, to identify characteristics that contribute to high resale values exceeding $1 million. Using the K-means clustering technique, a dataset of over 170,000 HDB resale transactions from 2017 to January 2024 was analysed to identify key factors that influence resale prices. The insights gained from this project can empower prospective buyers to make informed decisions when purchasing a 4-room HDB flat. The project is presented using the CRISP-DM methodology.",
       "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Running%20Code.ipynb",
-      "tags": ["Python", "Machine Learning", "Fraud Detection"]
+      "tags": ["SPSS Modeler", "Machine Learning", "Tableau"]
     },
     {
-      "title": "Customer Segmentation",
-      "description": "Segmented customers based on their purchasing behavior.",
+      "title": "Harnessing Data Integration for Enhanced Customer Satisfaction",
+      "description": "This project presents a comprehensive initiative aimed at enhancing customer satisfaction within CosmicCart through the development of a Customer 360 data hub. The project addresses the existing challenges in customer service resulting from fragmented data sources, proposing an integrated solution that streamlines access to customer histories. By automating data loading into a Snowflake data lake and incorporating generative AI assistance for service agents, the project seeks to improve service efficiency, reduce ticket resolution times, and ultimately elevate customer satisfaction (CSAT) scores.",
       "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb",
-      "tags": ["Python", "Clustering", "Data Mining"]
+      "tags": ["Workato", "Data Project Proposal", "Enterprise Data Integration"]
+    },
+    {
+      "title": "Data Consolidation & Transformation with Python",
+      "description": "This project involved automating the process of extracting and consolidating data from multiple Excel spreadsheets containing doctor survey responses into a structured MySQL database.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb",
+      "tags": ["Python", "MySQL", "Automation"]
+    },
+    {
+      "title": "Difference-in-Differences (DID) Analysis of 10% Discount on Dairy Product Sales",
+      "description": "This project utilizes a Difference-in-Differences (DID) approach to evaluate the impact of a 10% discount on dairy product sales at 200 supermarkets of a certain chain over a 15-day period. The analysis distinguishes between supermarkets receiving the discount (storeids 1-50) and those not receiving it (storeids 51-200). Initial observations indicate higher average sales in the discounted group. By comparing sales trends before and after the discount implementation between the treated and control groups, the DID methodology isolates the effect of the discount from other factors. Results suggest that the discount significantly increases dairy product sales, with parallel trends in sales patterns supporting the validity of the DID approach.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb",
+      "tags": ["R", "Statistical Methods", "Causal Analysis"]
+    },
+    {
+      "title": "Visualising Singaporean Attitudes towards the US and China",
+      "description": "This project analyses data from the Global Attitudes Spring 2022 survey conducted by Pew Research Center, focussing on Singaporean opinions about the US and China using R and ggplot. The objective was to present the insights through data visualisation.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb",
+      "tags": ["R", "Data Visualisation", "Data Analysis"]
     }
   ]
 }
