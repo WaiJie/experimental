@@ -1,0 +1,48 @@
+{
+  "projects": [
+    {
+      "title": "Customer Churn Analysis",
+      "description": "Analyzed customer data to predict churn using Python.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Running%20Code.ipynb",
+      "tags": ["Python", "Pandas", "Scikit-learn"]
+    },
+    {
+      "title": "Sales Forecasting",
+      "description": "Developed a time series model to forecast monthly sales.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb",
+      "tags": ["Python", "Statsmodels", "Time Series"]
+    },
+    {
+      "title": "Market Basket Analysis",
+      "description": "Identified product associations from transaction data.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Notebook%20Basics.ipynb",
+      "tags": ["Python", "Apriori", "Data Mining"]
+    }
+  ],
+  "archivedProjects": [
+    {
+      "title": "E-commerce Product Recommendation",
+      "description": "Built a recommendation system for an e-commerce platform.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Running%20Code.ipynb",
+      "tags": ["Python", "Recommendation System", "Machine Learning"]
+    },
+    {
+      "title": "Sentiment Analysis of Social Media",
+      "description": "Performed sentiment analysis on Twitter data.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb",
+      "tags": ["Python", "NLTK", "Sentiment Analysis"]
+    },
+    {
+      "title": "Fraud Detection",
+      "description": "Developed a model to detect fraudulent transactions.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Running%20Code.ipynb",
+      "tags": ["Python", "Machine Learning", "Fraud Detection"]
+    },
+    {
+      "title": "Customer Segmentation",
+      "description": "Segmented customers based on their purchasing behavior.",
+      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb",
+      "tags": ["Python", "Clustering", "Data Mining"]
+    }
+  ]
+}

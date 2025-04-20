@@ -1,0 +1,228 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+// Import data from the JSON file
+import projectsData from '../data/projects.json';
+
+// Destructure the projects and archivedProjects arrays from the imported JSON data
+const { projects, archivedProjects } = projectsData;
+
+// Import Swiper styles
+// import 'swiper/css'; // REMOVE SWIPER CSS
+// import 'swiper/css/navigation'; // REMOVE SWIPER CSS
+// import 'swiper/css/pagination';  // REMOVE SWIPER CSS
+---
+
+<Layout title="Data Analytics Portfolio">
+
+  {/* Projects Tab Content */}
+  <div id="projects-content" class="tab-content active">
+    <main>
+      <h1>My Data Analytics Portfolio</h1>
+      <p class="intro">
+        Welcome! Here are some of the projects I've worked on.
+      </p>
+
+      <div class="projects-container">
+        {projects.map((project, index) => (
+          <ProjectCard
+            title={project.title}
+            description={project.description}
+            notebookUrl={project.notebookUrl}
+            tags={project.tags}
+            index={index}
+          />
+        ))}
+      </div>
+    </main>
+  </div>
+
+  {/* About Me Tab Content */}
+  <div id="about-content" class="tab-content">
+    <main>
+      <h1>About Me</h1>
+      <p class="intro">Learn a little more about my background and skills.</p>
+      <article>
+        <h2>Introduction</h2>
+        <p>Hello! I'm a passionate data analyst with experience in extracting insights from complex datasets. I enjoy tackling challenging problems and communicating findings through clear visualizations and narratives.</p>
+        <h2>Skills</h2>
+        <ul>
+          <li>Data Analysis & Visualization (Python, Pandas, Matplotlib, Seaborn)</li>
+          <li>SQL & Database Management</li>
+          <li>Statistical Analysis</li>
+          <li>Machine Learning Fundamentals</li>
+          <li>Data Cleaning & Preprocessing</li>
+          <li>Reporting & Dashboarding (e.g., Tableau, Power BI - *mention specific tools if applicable*)</li>
+        </ul>
+        <h2>Experience</h2>
+        <p>*(Placeholder: Briefly describe relevant experience or key projects here. You can elaborate on specific roles or accomplishments.)*</p>
+        <h2>Education</h2>
+        <p>*(Placeholder: Mention relevant degrees, certifications, or coursework.)*</p>
+      </article>
+    </main>
+  </div>
+
+  {/* Contact Tab Content */}
+  <div id="contact-content" class="tab-content">
+    <main>
+      <h1>Contact</h1>
+      <p class="intro">Feel free to reach out!</p>
+      <div class="contact-info">
+        <p>You can connect with me through the following channels:</p>
+        <ul>
+          <li><strong>Email:</strong> <a href="mailto:your.email@example.com">your.email@example.com</a></li>
+          <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">linkedin.com/in/yourprofile</a></li>
+          <li><strong>GitHub:</strong> <a href={projects[0]?.notebookUrl.split('/')[3] ? `https://github.com/${projects[0].notebookUrl.split('/')[3]}` : '#'} target="_blank" rel="noopener noreferrer">Your GitHub Profile</a> (Link derived from first project, update if needed)</li>
+          {/* Add other relevant links like a personal website or portfolio */}
+        </ul>
+        <p>*(Optional: Add a contact form here if desired, though that requires more setup)*</p>
+      </div>
+    </main>
+  </div>
+
+    {/* Archive Tab Content */}
+    <div id="archive-content" class="tab-content">
+    <main>
+      <h1>Project Archive</h1>
+      <p class="intro">
+        These are some of my older projects.
+      </p>
+
+      <div class="projects-container">
+        {archivedProjects.map((project, index) => (
+          <ProjectCard
+            title={project.title}
+            description={project.description}
+            notebookUrl={project.notebookUrl}
+            tags={project.tags}
+            index={index}
+          />
+        ))}
+      </div>
+    </main>
+  </div>
+
+</Layout>
+
+<!-- Tab Switching Logic -->
+<script is:inline>
+  // is:inline ensures this runs in the browser immediately
+  function setupTabs() {
+    const tabContainer = document.querySelector('.tab-nav ul');
+    if (!tabContainer) return; // Exit if tabs aren't found
+
+    const tabButtons = tabContainer.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabContainer.addEventListener('click', (event) => {
+      const clickedButton = event.target.closest('.tab-button');
+      if (!clickedButton) return; // Exit if click wasn't on a button
+
+      // Prevent default link behavior
+      event.preventDefault();
+
+      const targetTabId = clickedButton.getAttribute('data-tab');
+      if (!targetTabId) return; // Exit if button has no data-tab
+
+      // Update button active states
+      tabButtons.forEach(button => {
+        button.classList.toggle('active', button === clickedButton);
+      });
+
+      // Update content visibility
+      tabContents.forEach(content => {
+        content.classList.toggle('active', content.id === `${targetTabId}-content`);
+      });
+    });
+
+      // Set "Projects" tab as active on initial load
+      const initialTab = document.querySelector('.tab-button[data-tab="projects"]');
+      if (initialTab) {
+        initialTab.classList.add('active');
+        document.getElementById('projects-content').classList.add('active');
+      }
+  }
+
+  // Run the setup function once the DOM is ready
+  // Using DOMContentLoaded ensures elements exist before trying to access them
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupTabs);
+  } else {
+    // DOMContentLoaded has already fired
+    setupTabs();
+  }
+</script>
+
+<style is:global>
+  /* Styles specific to index page content */
+  main {
+    /* Remove margin/padding here if handled by .content-container in Layout */
+    /* margin: auto; */
+    /* padding: 1.5rem; */
+    /* max-width: 1200px; */
+    color: var(--text-white); /* Use theme variable */
+  }
+
+  h1 {
+    font-size: 2.5rem; /* Slightly smaller h1 for tab content */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--accent-navy-light); /* Use theme variable */
+  }
+
+  .intro {
+    text-align: center;
+    margin-bottom: 2.5rem; /* More space below intro */
+    font-size: 1.1rem;
+    color: rgba(240, 240, 240, 0.8); /* Use theme variable with opacity */
+  }
+
+  /* New styles for project container */
+  .projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 2rem;
+  }
+
+  /* Media query for smaller screens */
+  @media (max-width: 767px) {
+    .projects-container {
+      grid-template-columns: 1fr; /* Single column on small screens */
+    }
+  }
+
+  /* Styles for About Me and Contact sections */
+  article, .contact-info {
+    background-color: var(--card-grey); /* Use theme variable */
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-grey); /* Use theme variable */
+    margin-top: 2rem;
+  }
+  article h2, .contact-info h2 { /* Target h2 within these sections */
+     margin-top: 0;
+     color: var(--accent-navy-light);
+     border-bottom: 1px solid var(--border-grey);
+     padding-bottom: 0.5rem;
+     margin-bottom: 1.5rem;
+  }
+  article ul, .contact-info ul {
+    list-style: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  article li, .contact-info li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+  .contact-info strong {
+    color: var(--accent-navy-light);
+  }
+
+  /* Remove default Astro elements if they were previously targeted */
+  .link-card-grid, .astro-a, .instructions {
+    display: none;
+  }
+</style>

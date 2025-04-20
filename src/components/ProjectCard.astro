@@ -1,0 +1,356 @@
+---
+// src/components/ProjectCard.astro
+interface Props {
+  title: string;
+  description: string;
+  notebookUrl: string;
+  tags?: string[];
+  index: number; // Add index for unique image seed
+}
+
+const { title, description, notebookUrl, tags = [], index } = Astro.props;
+
+// Construct the nbviewer URL
+const viewerUrl = notebookUrl.startsWith('https://nbviewer.org/')
+  ? notebookUrl
+  : `https://nbviewer.org/url/${notebookUrl}`; // Adjust if needed
+
+// Placeholder image URL using index as seed
+const imageUrl = `https://picsum.photos/seed/${index + 1}/400/300`; // +1 to avoid seed 0
+
+const modalId = `modal-${index}`;
+const modalContentId = `modal-content-${index}`;
+const iframeId = `iframe-${index}`;
+---
+
+<div class="project-card" data-project-index={index}> {/* Add index to card */}
+  <img src={imageUrl} alt={`Placeholder image for ${title}`} class="project-image" loading="lazy"/>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  {tags.length > 0 && (
+    <div class="tags">
+      {tags.map(tag => <span class="tag">{tag}</span>)}
+    </div>
+  )}
+  <button class="view-notebook-button" data-modal-id={modalId} data-iframe-id={iframeId} data-iframe-src={viewerUrl}>
+    View Notebook &rarr;
+  </button>
+
+  {/* Modal Structure - initially hidden here */}
+  <div id={modalId} class="modal" aria-hidden="true" data-project-index={index}>
+    <div class="modal-overlay" tabindex="-1" data-modal-close></div>
+    <div class="modal-content-wrapper">
+      <div id={modalContentId} class="modal-content" role="dialog" aria-modal="true" aria-labelledby={`modal-title-${index}`}>
+        <h4 id={`modal-title-${index}`} class="modal-title">{title}</h4>
+        <button class="modal-close" aria-label="Close modal" data-modal-close>&times;</button>
+        <div class="modal-body">
+          <iframe id={iframeId} frameborder="0" loading="lazy" title={`Jupyter Notebook Preview: ${title}`}></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .project-card {
+    background-color: var(--card-grey); /* Use theme variable */
+    border-radius: 8px;
+    padding: 1.5rem;
+    color: var(--text-white); /* Use theme variable */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure card takes full height in swiper slide */
+    box-shadow: inset 0 0 0 1px var(--border-grey); /* Use theme variable */
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add subtle hover effect */
+  }
+
+  .project-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 1px var(--accent-navy-light);
+  }
+
+  .project-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    background-color: #333; /* Keep a dark placeholder bg */
+    border: 1px solid var(--border-grey);
+  }
+
+  .project-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    color: var(--accent-navy-light); /* Use theme variable */
+  }
+
+  .project-card p {
+    margin-bottom: 1rem;
+    flex-grow: 1; /* Allow description to push button down */
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-white); /* Ensure paragraph text uses theme color */
+  }
+
+  .tags {
+    margin-bottom: 1rem;
+  }
+
+  .tag {
+    display: inline-block;
+    background-color: rgba(90, 141, 238, 0.15); /* Navy accent with low opacity */
+    color: var(--accent-navy-light); /* Use theme variable */
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px; /* Pill shape */
+    font-size: 0.75rem; /* Slightly smaller */
+    font-weight: 500;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(90, 141, 238, 0.3);
+  }
+
+  .view-notebook-button {
+    background-color: transparent;
+    border: 1px solid var(--accent-navy); /* Use theme variable */
+    color: var(--accent-navy-light); /* Use theme variable */
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600; /* Bolder */
+    align-self: flex-start;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    text-align: left;
+    appearance: none;
+    font-size: 0.9rem;
+    margin-top: auto; /* Push button to bottom if content is short */
+  }
+
+  .view-notebook-button:hover {
+    background-color: rgba(90, 141, 238, 0.1); /* Navy accent hover */
+    color: white;
+    border-color: var(--accent-navy-light); /* Use theme variable */
+  }
+
+  /* --- Modal Styles --- */
+  .modal {
+    position: fixed;
+    inset: 0; /* Replaces top/left/right/bottom */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.2s, opacity 0.2s ease-in-out;
+  }
+
+  .modal[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+  }
+
+  .modal-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(10, 10, 20, 0.8); /* Darker overlay */
+    cursor: pointer;
+  }
+
+  .modal-content-wrapper {
+     position: relative;
+     z-index: 1001;
+     width: 90%; /* Keep 90% width */
+     max-width: 1400px; /* Add a max-width for very large screens */
+     height: 90vh; /* Make modal taller - 90% of viewport height */
+     max-height: 95vh; /* Absolute max height */
+     display: flex;
+     flex-direction: column;
+     overflow: hidden; /* Hide overflow on the wrapper */
+     border-radius: 8px; /* Add radius to wrapper */
+     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  .modal-content {
+    background-color: var(--card-grey); /* Use theme variable */
+    color: var(--text-white); /* Use theme variable */
+    /* Remove border radius here, apply to wrapper */
+    padding: 1.5rem;
+    /* Remove box-shadow here, apply to wrapper */
+    overflow: hidden; /* Content itself shouldn't scroll */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Make content fill the wrapper height */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    color: var(--accent-navy-light); /* Use theme variable */
+    padding-right: 3rem; /* More space for close button */
+    flex-shrink: 0; /* Prevent title shrinking */
+    font-weight: 600;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 0.8rem; /* Adjust position slightly */
+    right: 0.8rem;
+    background: none;
+    border: none;
+    font-size: 2.2rem; /* Slightly larger */
+    line-height: 1;
+    color: rgba(240, 240, 240, 0.6); /* Use theme text color with opacity */
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.2s ease;
+    z-index: 1002;
+  }
+
+  .modal-close:hover {
+    color: var(--text-white); /* Use theme variable */
+  }
+
+  .modal-body {
+    flex-grow: 1; /* CRITICAL: Allow body to take all remaining vertical space */
+    overflow: hidden; /* CRITICAL: Prevent body from scrolling, iframe will scroll */
+    border: 1px solid var(--border-grey); /* Use theme variable */
+    border-radius: 4px;
+    min-height: 0; /* CRITICAL: Override potential browser default min-height */
+    display: flex; /* Ensure iframe behaves correctly */
+    background-color: white; /* Give iframe a white background before it loads */
+  }
+
+  .modal-body iframe {
+    width: 100%;
+    height: 100%; /* CRITICAL: Make iframe fill the modal-body */
+    border: none;
+    display: block;
+  }
+
+  /* Hide the modal template when it's inside the card */
+  .project-card > .modal[aria-hidden="true"] {
+      display: none;
+  }
+
+</style>
+
+<script>
+  // Modal Teleporting Logic
+  if (!document.body.hasAttribute('data-modal-listeners-attached')) {
+    document.body.setAttribute('data-modal-listeners-attached', 'true');
+
+    const portal = document.getElementById('modal-portal');
+
+    const openModal = (button) => {
+      const modalId = button.getAttribute('data-modal-id');
+      const iframeId = button.getAttribute('data-iframe-id');
+      const iframeSrc = button.getAttribute('data-iframe-src');
+      const originalCard = button.closest('.project-card');
+
+      // Try finding the modal in the original card first (for the very first open)
+      let modalElement = originalCard?.querySelector(`#${modalId}`);
+      let iframe = modalElement?.querySelector(`#${iframeId}`);
+
+      console.log('openModal called for button:', button);
+      console.log('  Data attributes:', { modalId, iframeId, iframeSrc });
+      console.log('  Initial elements found in card:', { modalElement: !!modalElement, iframe: !!iframe });
+
+      // If not found in the card, it means it's already been moved to the portal
+      if (!modalElement && portal) {
+         modalElement = portal.querySelector(`#${modalId}`);
+         iframe = modalElement?.querySelector(`#${iframeId}`);
+         console.log('  Elements found in portal:', { modalElement: !!modalElement, iframe: !!iframe, portal: !!portal });
+      } else if (!portal) {
+         console.error('  Modal portal not found!');
+         return; // Cannot proceed without portal
+      }
+
+
+      if (modalElement && iframe) {
+        console.log('  Modal and iframe elements found.');
+
+        // If the modal is still in the original card, move it to the portal
+        if (modalElement.parentElement !== portal) {
+           console.log('  Attempting to append modal to portal.');
+           portal.appendChild(modalElement);
+           console.log('  Modal appended to portal.');
+        } else {
+           console.log('  Modal already in portal.');
+        }
+
+
+        const currentIframeSrc = iframe.getAttribute('src');
+        console.log('  Current iframe src BEFORE setting:', currentIframeSrc);
+
+        // Only set the iframe src if it's not already set to the correct URL
+        if (currentIframeSrc !== iframeSrc) {
+          console.log('  Setting iframe src to:', iframeSrc);
+          iframe.setAttribute('src', iframeSrc);
+        } else {
+           console.log('  Iframe src already set or matches, not changing.');
+        }
+
+        modalElement.setAttribute('aria-hidden', 'false');
+        console.log('  Modal aria-hidden set to false.');
+        // Consider adding focus management later if needed
+      } else {
+         console.error('  Failed to find modal elements.');
+      }
+    };
+
+    const closeModal = (modalElement) => {
+       if (!modalElement) {
+         console.log('closeModal called but no modalElement provided.');
+         return;
+       }
+       const iframe = modalElement.querySelector('iframe');
+       const projectIndex = modalElement.getAttribute('data-project-index');
+       // We no longer need the original card reference here as we won't move the modal back
+
+       console.log('closeModal called for modal with index:', projectIndex);
+       console.log('  Elements found:', { modalElement: !!modalElement, iframe: !!iframe });
+
+
+       if (iframe) {
+         console.log('  Clearing iframe src.');
+         // Clearing the src helps stop the video/audio if any, and resets the iframe state
+         iframe.setAttribute('src', '');
+       }
+       console.log('  Setting modal aria-hidden to true.');
+       modalElement.setAttribute('aria-hidden', 'true');
+
+       console.log('  Modal remains in portal.'); // Add a log to confirm
+    };
+
+    document.body.addEventListener('click', (event) => {
+      const button = event.target.closest('.view-notebook-button');
+      if (button) {
+        console.log('Click detected on view-notebook-button.');
+        openModal(button);
+      }
+
+      const closeTrigger = event.target.closest('[data-modal-close]');
+      if (closeTrigger) {
+        console.log('Click detected on modal-close trigger.');
+        closeModal(closeTrigger.closest('.modal'));
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        console.log('Escape key pressed.');
+        const openModalElement = portal?.querySelector('.modal[aria-hidden="false"]');
+        closeModal(openModalElement);
+      }
+    });
+  } else {
+     console.log('Modal listeners already attached.');
+  }
+</script>
