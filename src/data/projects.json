@@ -3,7 +3,7 @@
     {
       "title": "Detecting Credit Card Fraud in Transactional Data",
       "description": "This project applied data analytics and machine learning to a large Kaggle dataset, separating online and offline transactions for analysis. Multiple binary classification models (Logistic Regression, Decision Tree, Random Forest, Neural Networks, Gradient Boosting, SVC, KNN) were developed and evaluated using 5-fold cross-validation. Random Forest emerged as the best model after hyperparameter tuning, achieving high F1-scores—0.8499 (offline) and 0.8931 (online). Feature importance analysis revealed key fraud indicators, and business impact analysis estimated annual cost savings of 68.54% (offline) and 83.37% (online) for a sample of 2,000 customers.",
-      "notebookUrl": "https://nbviewer.org/github/jupyter/notebook/blob/main/docs/source/examples/Notebook/Running%20Code.ipynb",
+      "notebookUrl": "https://nbviewer.org/github/WaiJie/Portfolio/blob/main/transactions-data-prep_code-test.ipynb",
       "tags": ["Python", "Scikit-learn","Machine Learning","Hyperparameter tuning"]
     },
     {
